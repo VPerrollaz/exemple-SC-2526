@@ -43,6 +43,20 @@ class SolutionTransport(BaseModel):
         if len(self.solution) != len(self.probleme.couts_unitaires):
             msg = "il doit y avoir exactement une quantité transportée par couple entrepot/client"
             raise ValueError(msg)
+        for indice_entrepot in ...:
+            expedition = sum(
+                self[indice_entrepot, indice_client] for indice_client in ...
+            )
+            if expedition > self.probleme.entrepots[indice_entrepot]:
+                msg = f"Trop expédié depuis l'entrepot d'indice {indice_entrepot}"
+                raise ValueError(msg)
+        for indice_client in ...:
+            reception = sum(
+                self[indice_entrepot, indice_client] for indice_entrepot in ...
+            )
+            if reception != self.probleme.clients[indice_client]:
+                msg = f"Le client d'indice {indice_client} n'a pas reçu la bonne quantité de marchandise"
+                raise ValueError(msg)
         return self
 
     def __getitem__(self, indice: tuple[int, int]) -> NonNegativeFloat:
