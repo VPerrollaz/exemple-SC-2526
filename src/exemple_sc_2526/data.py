@@ -3,7 +3,7 @@
 Module implémentant les objets représentant le problème et sa solution.
 """
 
-from pydantic import BaseModel, PositiveFloat, model_validator
+from pydantic import BaseModel, PositiveFloat, NonNegativeFloat, model_validator
 from typing import Self
 
 
@@ -36,7 +36,7 @@ class SolutionTransport(BaseModel):
     """Encode une solution d'un problème de transport."""
 
     probleme: ProblemeTransport
-    solution: list[PositiveFloat]
+    solution: list[NonNegativeFloat]
 
     @model_validator(mode="after")
     def verifie_compatibilite(self) -> Self:
