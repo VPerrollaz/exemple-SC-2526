@@ -1,0 +1,26 @@
+[project]
+name = "exemple-sc-2526"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Vincent Perrollaz", email = "vincent.perrollaz@laposte.net" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "numpy>=2.4.2",
+    "pydantic>=2.12.5",
+    "scipy>=1.17.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.24,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.15.4",
+    "ty>=0.0.20",
+]
