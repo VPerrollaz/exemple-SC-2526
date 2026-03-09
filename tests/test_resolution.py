@@ -4,7 +4,6 @@ Tests unitaire du module resolution
 """
 
 import numpy as np
-import pytest
 from exemple_sc_2526.data import ProblemeTransport, SolutionTransport
 from exemple_sc_2526.resolution import resolution, construction_matrices
 

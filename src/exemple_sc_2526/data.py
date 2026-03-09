@@ -8,7 +8,34 @@ from typing import Self
 
 
 class ProblemeTransport(BaseModel):
-    """Encode les données d'un prolème."""
+    """Encode les données d'un prolème.
+
+    n entrepots, m clients, n*m couts unitaires de transport
+    le cout unitaire de transport de l'entrepot i vers le client est stocké à la position i * m + j
+
+    Avant la création de l'objet on vérifie que
+    - le nombre d'entrepots est strictement positif
+    - le nombre de clients est strictement positif
+    - le nombre de couts unitaires de transport est cohérent
+    - le stock est supérieur ou égal à la demande
+
+    Exemples:
+
+    >>> ProblemeTransport(entrepots=[], clients=[1.0], couts_unitaires=[1.0])
+    Traceback (most recent call last):
+    File "<python-input-2>", line 1, in <module>
+        ProblemeTransport(entrepots=[], clients=[1.0], couts_unitaires=[1.0])
+        ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    Value error, Il faut au moins un entrepot [type=value_error, input_value={'entrepots': [], 'client...couts_unitaires': [1.0]}, input_type=dict]
+        For further information visit https://errors.pydantic.dev/2.12/v/value_error
+    >>> ProblemeTransport(entrepots=[1.0], clients=[], couts_unitaires=[1.0])
+    Traceback (most recent call last):
+    File "<python-input-3>", line 1, in <module>
+        ProblemeTransport(entrepots=[1.0], clients=[], couts_unitaires=[1.0])
+        ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    Value error, Il faut au moins un client [type=value_error, input_value={'entrepots': [1.0], 'cli...couts_unitaires': [1.0]}, input_type=dict]
+        For further information visit https://errors.pydantic.dev/2.12/v/value_error
+    """
 
     entrepots: list[PositiveFloat]
     clients: list[PositiveFloat]
@@ -54,7 +81,7 @@ class SolutionTransport(BaseModel):
         for indice_entrepot in range(self.nombre_entrepots):
             expedition = sum(
                 self[indice_entrepot, indice_client]
-                for indice_client in range(self.nombre_clients)
+                for indice_client in range(len(self.probleme.clients))
             )
             if expedition > self.probleme.entrepots[indice_entrepot]:
                 msg = f"Trop expédié depuis l'entrepot d'indice {indice_entrepot}"
