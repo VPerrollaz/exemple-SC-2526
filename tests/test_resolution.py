@@ -24,6 +24,32 @@ def test_construction_simple():
 
 
 def test_construction_v2():
+    probleme = ProblemeTransport(
+        entrepots=[1.0, 1.0],
+        clients=[2.0],
+        couts_unitaires=[1.0, 1.0],
+    )
+    Aeq, Aub = construction_matrices(probleme=probleme)
+    assert Aeq.shape == (1, 2)
+    assert Aub.shape == (2, 2)
+    assert np.array_equal(Aeq, np.array([[1.0, 1.0]]))
+    assert np.array_equal(Aub, np.array([[1.0, 0.0], [0.0, 1.0]]))
+
+
+def test_construction_v2_dual():
+    probleme = ProblemeTransport(
+        entrepots=[2.0],
+        clients=[1.0, 1.0],
+        couts_unitaires=[1.0, 1.0],
+    )
+    Aeq, Aub = construction_matrices(probleme=probleme)
+    assert Aeq.shape == (2, 2)
+    assert Aub.shape == (1, 2)
+    assert np.array_equal(Aub, np.array([[1.0, 1.0]]))
+    assert np.array_equal(Aeq, np.array([[1.0, 0.0], [0.0, 1.0]]))
+
+
+def test_construction_v3():
     """Problème simplissime."""
     probleme = ProblemeTransport(
         entrepots=[1.0, 1.0],

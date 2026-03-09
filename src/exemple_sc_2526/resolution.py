@@ -15,11 +15,11 @@ def construction_matrices(
     n, m = len(probleme.entrepots), len(probleme.clients)
     Aub = np.zeros((n, m * n))
     Aeq = np.zeros((m, m * n))
-    for i in range(m):
-        for j in range(n):
+    for i in range(n):
+        for j in range(m):
             Aub[i, i * len(probleme.clients) + j] = 1.0
-    for j in range(n):
-        for i in range(m):
+    for j in range(m):
+        for i in range(n):
             Aeq[j, i * len(probleme.clients) + j] = 1.0
 
     return Aeq, Aub
